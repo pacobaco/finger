@@ -1,0 +1,31 @@
+Name: John Doe
+Register Number: 12345-678
+Age: 45
+Race: White
+Sex: Male
+Release Date: 05-23-2026
+Location: FCI Butner Medium II
+
+Name: Jane Smith
+Register Number: 98765-432
+Age: 37
+Race: Black
+Sex: Female
+Release Date: 11-15-2024
+Location: FCI Danbury
+
+Name: Robert Brown
+Register Number: 11111-222
+Age: 52
+Race: Hispanic
+Sex: Male
+Release Date: 02-09-2025
+Location: USP Leavenworth
+
+Name: Lisa Johnson
+Register Number: 33333-444
+Age: 29
+Race: Asian
+Sex: Female
+Release Date: 08-14-2023
+Location: FCI Aliceville
