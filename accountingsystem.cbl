@@ -31,3 +31,47 @@ WORKING-STORAGE SECTION.
 77  TOTAL-DEBITS       PIC 9(9)V99 VALUE 0.
 77  TOTAL-CREDITS      PIC 9(9)V99 VALUE 0.
 77  LINE               PIC X(80).
+
+PROCEDURE DIVISION.
+MAIN-LOGIC.
+    PERFORM INITIATE-FILES
+    PERFORM PROCESS-TRANSACTIONS
+    PERFORM CLOSE-FILES
+    STOP RUN.
+
+INITIATE-FILES.
+    OPEN INPUT TransFile
+    OPEN I-O LedgerFile.
+
+PROCESS-TRANSACTIONS.
+    READ TransFile INTO TransRecord
+        AT END SET WS-EOF TO "Y".
+    PERFORM UNTIL WS-EOF = "Y"
+        MOVE TransAmount TO WS-TransAmount
+        MOVE TransAccount TO WS-TransAccount
+        PERFORM UPDATE-LEDGER
+        READ TransFile INTO TransRecord
+            AT END SET WS-EOF TO "Y"
+    END-PERFORM.
+
+UPDATE-LEDGER.
+    MOVE "N" TO WS-AccountFound
+    READ LedgerFile INTO LedgerRecord
+        AT END DISPLAY "Account not found."
+    PERFORM UNTIL WS-AccountFound = "Y"
+        IF AccountName = WS-TransAccount
+            ADD WS-TransAmount TO AccountBalance
+            MOVE "Y" TO WS-AccountFound
+            REWRITE LedgerRecord
+        ELSE
+            DISPLAY "Account not found."
+        END-IF
+        READ LedgerFile INTO LedgerRecord
+            AT END MOVE "Y" TO WS-AccountFound
+    END-PERFORM.
+
+CLOSE-FILES.
+    CLOSE TransFile
+    CLOSE LedgerFile.
+
+END PROGRAM AccountingSystem.
